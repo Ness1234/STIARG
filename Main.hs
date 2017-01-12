@@ -7,7 +7,7 @@ import qualified Network.Socket as Sock
 
 
 move :: (Int, Int) -> String -> (Int, Int) -> (Int, Int)
-move (xdim, ydim) "\"s\"" (x, y) = (x, (y + 4))
+move (xdim, ydim) "\"s\"" (x, y) = (x, (y + 4)) -- Add border so you can't go outside the road
 move (xdim, ydim) "\"w\"" (x, y) = (x, (y - 4))
 --move (xdim, ydim) "\"a\"" (x, y) = ((x - 1) `mod` xdim, y)
 --move (xdim, ydim) "\"d\"" (x, y) = ((x + 1) `mod` xdim, y)
