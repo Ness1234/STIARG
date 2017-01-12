@@ -1,6 +1,10 @@
 # STIARG
 ## Shit This Is A Racing Game
 
+## How to compile
+1. $ stack build
+2. $ stack ghc -- --make Main.hs
+
 ## Documentation
 
 The back-end (e.g., events creation, timing behaviour,...) is already implemented in the provided project library. To help you getting started with your own FritzLight project, we provide a sample program which allows the user to move a single pixel over the screen (output) by pressing the h, j, k, or l key (input).
