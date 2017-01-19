@@ -1,8 +1,8 @@
 module Main where
 import Network.MateLight.Simple
-
 import Data.Maybe
 import qualified Network.Socket as Sock
+import System.Random
 
 type Player = (Int, Int)
 type Enemies = [(Int, Int)]
@@ -69,14 +69,16 @@ isInCar a b (x:xs)  | a == fst x && b == snd x  = True
                       | xs == []                 = False
                       | otherwise                = isInCar a b xs
 
-newFrame :: [Event String] -> State -> (ListFrame, State)
-newFrame events state@(State playerPosition enemies tick) = (toFrame dim playerPosition' (myCar playerPosition') (myTire playerPosition') (mergeLists (map otherCar enemypositions)) (mergeLists (map otherTire enemypositions)) tick, (State playerPosition' enemypositions newTick))
+newFrame :: [Int] -> [Event String] -> State -> (ListFrame, State)
+newFrame ints events state@(State playerPosition enemies tick) = (toFrame dim playerPosition' (myCar playerPosition') (myTire playerPosition') (mergeLists (map otherCar enemypositions)) (mergeLists (map otherTire enemypositions)) tick, (State playerPosition' enemypositions newTick))
                                         where
-                                            playerPosition' = foldl (\acc (Event mod ev) -> if mod == "KEYBOARD" then move dim ev acc else acc) playerPosition events
-                                            newTick | tick == 0 = 25
-                                                    | otherwise = tick - 1
-                                            enemypositions | ((mod tick 5) == 0) = map moveEnemy enemies
-                                                           | otherwise         = enemies
+                                            playerPosition'     = foldl (\acc (Event mod ev) -> if mod == "KEYBOARD" then move dim ev acc else acc) playerPosition events
+                                            enemyList | (ints !! 1) `mod` 50 == 1 = enemies ++ [(30, 2 + (4 * ((ints !! 2) `mod` 3)))]
+                                                      | otherwise = enemies  
+                                            newTick   | tick == 0 = 25
+                                                      | otherwise = tick - 1
+                                            enemypositions | ((mod tick 5) == 0) = map moveEnemy enemyList
+                                                           | otherwise           = enemyList
 
 mergeLists :: [[a]] -> [a]
 mergeLists xxs = foldl (++) [] xxs
@@ -84,4 +86,4 @@ mergeLists xxs = foldl (++) [] xxs
 dim :: (Int, Int)
 dim = (30, 12)
 main :: IO ()
-main = Sock.withSocketsDo $ runMate (Config (fromJust $ parseAddress "134.28.70.172") 1337 dim (Just 33000) False []) newFrame (State (1, 6) [(50, 6)] 25)
+main = Sock.withSocketsDo $ runMateRandom (Config (fromJust $ parseAddress "127.0.0.1") 1337 dim (Just 33000) False []) newFrame (State (1, 6) [(50, 6)] 25)
