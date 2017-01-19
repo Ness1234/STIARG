@@ -43,11 +43,11 @@ draw x y xs ys zs as current | isInCar x y xs          = Pixel 0xff 0 0
                              | otherwise               = Pixel 0x33 0x33 0x33
 
 isInStreet :: Int -> Int -> Int -> Bool
-isInStreet x y z | z > 20 &&           (y == 4 || y == 8) && x /= 4 && x /= 5 && x /= 9 && x /= 10 && x /= 14 && x /= 15 && x /= 19 && x /= 20 && x /= 24 && x /= 25 && x /= 29 && x /= 30 = True
-                 | z > 15 && z < 20 && (y == 4 || y == 8) && x /= 3 && x /= 4 && x /= 8 && x /=  9 && x /= 13 && x /= 14 && x /= 18 && x /= 19 && x /= 23 && x /= 24 && x /= 28 && x /= 29 = True
-                 | z > 10 && z < 15 && (y == 4 || y == 8) && x /= 2 && x /= 3 && x /= 7 && x /=  8 && x /= 12 && x /= 13 && x /= 17 && x /= 18 && x /= 22 && x /= 23 && x /= 27 && x /= 28 = True
-                 | z > 5  && z < 10 && (y == 4 || y == 8) && x /= 1 && x /= 2 && x /= 6 && x /=  7 && x /= 11 && x /= 12 && x /= 16 && x /= 17 && x /= 21 && x /= 24 && x /= 26 && x /= 27 = True
-                 | z > 0  && z < 5  && (y == 4 || y == 8) && x /= 0 && x /= 1 && x /= 5 && x /=  6 && x /= 10 && x /= 11 && x /= 15 && x /= 16 && x /= 20 && x /= 21 && x /= 25 && x /= 26 = True
+isInStreet x y z | z > 15 &&           (y == 4 || y == 8) && x /= 4 && x /= 5 && x /= 9 && x /= 10 && x /= 14 && x /= 15 && x /= 19 && x /= 20 && x /= 24 && x /= 25 && x /= 29 && x /= 30 = True
+                 | z > 11 && z < 16 && (y == 4 || y == 8) && x /= 3 && x /= 4 && x /= 8 && x /=  9 && x /= 13 && x /= 14 && x /= 18 && x /= 19 && x /= 23 && x /= 24 && x /= 28 && x /= 29 = True
+                 | z > 7  && z < 12 && (y == 4 || y == 8) && x /= 2 && x /= 3 && x /= 7 && x /=  8 && x /= 12 && x /= 13 && x /= 17 && x /= 18 && x /= 22 && x /= 23 && x /= 27 && x /= 28 = True
+                 | z > 3  && z < 8  && (y == 4 || y == 8) && x /= 1 && x /= 2 && x /= 6 && x /=  7 && x /= 11 && x /= 12 && x /= 16 && x /= 17 && x /= 21 && x /= 24 && x /= 26 && x /= 27 = True
+                 | z > 0  && z < 4  && (y == 4 || y == 8) && x /= 0 && x /= 1 && x /= 5 && x /=  6 && x /= 10 && x /= 11 && x /= 15 && x /= 16 && x /= 20 && x /= 21 && x /= 25 && x /= 26 = True
                  | otherwise = False
 
 merge :: [a] -> [a] -> [a]
@@ -75,9 +75,9 @@ newFrame ints events state@(State playerPosition enemies tick) = (toFrame dim pl
                                             playerPosition'     = foldl (\acc (Event mod ev) -> if mod == "KEYBOARD" then move dim ev acc else acc) playerPosition events
                                             enemyList | (ints !! 1) `mod` 50 == 1 = enemies ++ [(30, 2 + (4 * ((ints !! 2) `mod` 3)))]
                                                       | otherwise = enemies  
-                                            newTick   | tick == 0 = 25
+                                            newTick   | tick == 0 = 20
                                                       | otherwise = tick - 1
-                                            enemypositions | ((mod tick 5) == 0) = map moveEnemy enemyList
+                                            enemypositions | ((mod tick 2) == 0) = map moveEnemy enemyList
                                                            | otherwise           = enemyList
 
 mergeLists :: [[a]] -> [a]
