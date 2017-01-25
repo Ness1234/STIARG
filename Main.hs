@@ -84,12 +84,7 @@ isAroundCar enemies (x, y) = endTrue $ map (aroundDat) enemies
                                     endTrue []                     = True
                                     endTrue (z:zs)     | not z     = False
                                                        | z         = endTrue zs
-{-
-enemyHit :: [(Int,Int)] -> (Int, Int) -> Bool 
-enemyHit [] _ = False 
-enemyHit (x:xs) (c1, c2) | (fst x == c1 && snd x == c2) = True
-                         | otherwise = enemyHit xs (c1,c2)
--}                       
+                                                       
 newFrame :: [Int] -> [Event String] -> State -> (ListFrame, State)
 newFrame ints events state@(State playerPosition enemies tick) = (toFrame dim playerPosition' (myCar playerPosition') (myTire playerPosition') (mergeLists (map otherCar enemypositions)) (mergeLists (map otherTire enemypositions)) tick, (State playerPosition' enemypositions newTick))
                                         where
