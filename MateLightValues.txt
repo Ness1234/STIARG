@@ -1,0 +1,8 @@
+draw :: Int -> Int -> [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> [(Int, Int)] -> Int -> Pixel
+draw x y xs ys zs as current | isInCar x y xs          = Pixel 0xff 0x5a 0x5a
+                             | isInCar x y zs          = Pixel 0xff 0 0xff
+                             | isInStreet x y current  = Pixel 0xff 0xff 0xff
+                             | isInTire x y ys         = Pixel 0xff 0x5a 0x5a
+                             | isInTire x y as         = Pixel 0xff 0 0xff
+                             | isOnMyGrass y           = Pixel 0x00 0xaa 0x00
+                             | otherwise               = Pixel 0x66 0x66 0x66
