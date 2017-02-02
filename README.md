@@ -5,6 +5,10 @@
 1. $ stack build
 2. $ stack ghc -- --make Main.hs
 
+## How to play
+Press W to go up, Press S to go down!
+Goal is to survive as long as possible!
+
     
 ## Which possibilities do I have to output my pixel data graphically?
 1. Online using the emulator at <http://pixelkino.haskell.de>
