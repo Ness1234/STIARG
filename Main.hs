@@ -100,7 +100,7 @@ enemyHit (x:xs) (z, y)  | fst x == (z + 4) && snd x == y    = True
 						-- NewFrame checks if the player hit an enemy car, if yes, resets the game, else does following applications : 
 						
 newFrame :: [Int] -> [Event String] -> State -> (ListFrame, State)
-newFrame ints events state@(State playerPosition enemies tick speed speedTick) | (enemyHit enemies playerPosition)  = (toFrame dim playerPosition' (myCar playerPosition') (myTire playerPosition') (mergeLists (map otherCar enemypositions)) (mergeLists (map otherTire enemypositions)) tick speed, (State (1, 6) [] 25 15 0))
+newFrame ints events state@(State playerPosition enemies tick speed speedTick) | (enemyHit enemies playerPosition)  = (toFrame dim playerPosition' (myCar playerPosition') (myTire playerPosition') (mergeLists (map otherCar enemypositions)) (mergeLists (map otherTire enemypositions)) tick speed, (State (1, 6) [] 500 15 0))
                                                                | otherwise                          = (toFrame dim playerPosition' (myCar playerPosition') (myTire playerPosition') (mergeLists (map otherCar enemypositions)) (mergeLists (map otherTire enemypositions)) (tick `mod` 50) speed, (State playerPosition' enemypositions newTick newSpeed newSTick))
                                         where
                                             newSpeed | tick == 500 && speed /= 1 = speed - 1     -- decounts the speed after every 500 ticks
