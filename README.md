@@ -1,5 +1,4 @@
-# STIARG
-## Shit This Is A Racing Game
+# STIARG - Shit This Is A Racing Game
 
 ## How to compile
 1. $ stack build
